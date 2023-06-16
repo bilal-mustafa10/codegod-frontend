@@ -1,0 +1,1 @@
+chrome.action.onClicked.addListener((function(e){chrome.scripting.executeScript({target:{tabId:e.id},files:["content_scripts/index.jsx"]}).then((function(){chrome.tabs.sendMessage(e.id,{cmd:"show_popup"})}))}));

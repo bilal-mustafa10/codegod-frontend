@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "CodeGod",
+  "version": "1.0",
+  "description": "CodeGod helps you understand the code ",
+  "permissions": ["scripting", "tabs", "activeTab", "storage"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["popup.html"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}
