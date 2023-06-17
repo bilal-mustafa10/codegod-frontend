@@ -1,3 +1,4 @@
+/*
 // background.js
 chrome.action.onClicked.addListener((tab) => {
     // Inject the content script into the current tab
@@ -9,3 +10,4 @@ chrome.action.onClicked.addListener((tab) => {
         chrome.tabs.sendMessage(tab.id, {cmd: 'show_popup'});
     });
 });
+*/

@@ -9,6 +9,8 @@
 }
 
 body {
+    height: 600px;
+    width: 800px;
     margin: 0;
     padding: 0;
     border-radius: 12px;

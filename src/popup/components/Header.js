@@ -20,12 +20,12 @@ const Header = ({onClose, onSelectModel}) => {
         >
             <Pane display="flex" alignItems="center">
                 {/*<img src="../../../assets/img/logo.png" alt="Codegod Logo" width="50" height="50"/>*/}
-                <Heading size={800} fontFamily="'Roboto Mono', monospace" color="#F1F5FF">
+                <Heading size={800} fontFamily="'Lato', sans-serif" color="#F1F5FF">
                     Codegod
                 </Heading>
             </Pane>
             <Pane display="flex" alignItems="center">
-                <Heading size={600} fontFamily="'Roboto Mono', monospace" color="#F1F5FF" marginRight={16}>
+                <Heading size={600} fontFamily="'Lato', sans-serif" color="#F1F5FF" marginRight={16}>
                     Model:
                 </Heading>
                 <Select value={selectedModel} onChange={handleModelChange}>

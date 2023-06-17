@@ -1,4 +1,6 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+// App.js
+
+import React, {useCallback, useEffect, useRef, useReducer} from 'react';
 import {Pane, Heading} from 'evergreen-ui';
 import {askQuestion, loadBot, updateModel} from "./api";
 import ErrorPanel from "./components/ErrorPanel";
@@ -6,9 +8,8 @@ import Header from "./components/Header";
 import ChatBubble from "./components/ChatBubble";
 import ChatInput from "./components/ChatInput";
 import './App.css';
+import { initialState, reducer } from './stateReducer';
 
-
-// Move functions outside of component if they don't use props or state
 const isValidGithubRepoUrl = (url) => {
     const urlParts = url.split("/");
     return urlParts.length >= 5 && urlParts[2] === "github.com";
@@ -19,117 +20,99 @@ const parseGithubRepoUrl = (url) => {
     return urlParts.slice(0, 5).join("/");
 };
 
-// Memoize ChatBubble to avoid unnecessary re-renders
 const MemoizedChatBubble = React.memo(ChatBubble);
 
 function App() {
-    const [loading, setLoading] = useState(true);
-    const [question, setQuestion] = useState('');
-    const [messageHistory, setMessageHistory] = useState([]);
-    const [error, setError] = useState(null);
-    const [url, setUrl] = useState(null);
-    const [chatHistory, setChatHistory] = useState("[('' , '')]");
+    const [state, dispatch] = useReducer(reducer, initialState);
     const messagesEndRef = useRef(null);
-    const [loadingChat, setLoadingChat] = useState(false);
-    const [model, setModel] = useState('gpt-3.5');
-    const [blankQuestionError, setBlankQuestionError] = useState(false);
 
     const load = async () => {
-        setError(null);
+        dispatch({ type: 'SET_ERROR', payload: null });
 
         chrome.tabs.query({active: true, currentWindow: true}, async function (tabs) {
             let current_url = tabs[0].url;
             if (!isValidGithubRepoUrl(current_url)) {
-                setError("Please navigate to a GitHub repository page and try again.");
-                setLoading(false);
+                dispatch({ type: 'SET_ERROR', payload: "Please navigate to a GitHub repository page and try again." });
+                dispatch({ type: 'SET_LOADING', payload: false });
                 return;
             }
 
             let parsed_url = parseGithubRepoUrl(current_url);
-            setUrl(parsed_url);
+            dispatch({ type: 'SET_URL', payload: parsed_url });
 
             const response = await loadBot(parsed_url);
 
             if (response.status !== 200) {
-                setError(`Error: ${response}`);
-                setLoading(false);
+                dispatch({ type: 'SET_ERROR', payload: `Error: ${response}` });
+                dispatch({ type: 'SET_LOADING', payload: false });
                 return;
             }
 
-            setMessageHistory([
-                {
+            dispatch({ type: 'SET_MESSAGE_HISTORY', payload: [{
                     id: 0,
                     question: '',
                     answer: 'Hi, I am Codegod. I can answer any question about the repo you are currently viewing.'
-                }
-            ])
+                }]
+            });
 
-            setLoading(false);
+            dispatch({ type: 'SET_LOADING', payload: false });
         });
     }
 
     const submitQuestion = async () => {
 
-        if (question === '') {
-            setBlankQuestionError(true);
+        if (state.question === '') {
+            dispatch({ type: 'SET_BLANK_QUESTION_ERROR', payload: true });
             return;
-
         }
-        setLoadingChat(true);
+
+        dispatch({ type: 'SET_LOADING_CHAT', payload: true });
+
         const data = {
-            'user_question': question,
-            'chat_history': chatHistory,
-            'model': model
+            'user_question': state.question,
+            'chat_history': state.chatHistory,
+            'model': state.model
         };
 
-        setMessageHistory(prevMessageHistory => [
-            ...prevMessageHistory,
-            {
-                id: prevMessageHistory.length,
-                question: question,
-                answer: 'Loading...'
-            }
-        ]);
+        dispatch({ type: 'SET_MESSAGE_HISTORY', payload: [
+                ...state.messageHistory,
+                {
+                    id: state.messageHistory.length,
+                    question: state.question,
+                    answer: 'Loading...'
+                }
+            ]});
 
         try {
             const response = await askQuestion(data);
+
             if (response.status !== 200) {
-                setError(`Error: ${response}`);
-                setLoadingChat(false);
+                dispatch({ type: 'SET_ERROR', payload: `Error: ${response}` });
+                dispatch({ type: 'SET_LOADING_CHAT', payload: false });
                 return;
             }
 
-            setChatHistory(response.data.chat_history)
+            dispatch({ type: 'SET_CHAT_HISTORY', payload: response.data.chat_history });
 
-            setMessageHistory(prevMessageHistory => {
-                let lastChatIndex = prevMessageHistory.length - 1;
+            dispatch({ type: 'UPDATE_LAST_MESSAGE', payload: response.data.bot });
 
-                return prevMessageHistory.map((chat, index) =>
-                    index === lastChatIndex
-                        ? {...chat, answer: response.data.bot}
-                        : chat
-                );
-            });
-
-            setQuestion('');
+            dispatch({ type: 'SET_QUESTION', payload: '' });
         } catch (error) {
             console.log(error);
-            setError(`Error: ${error}`);
+            dispatch({ type: 'SET_ERROR', payload: `Error: ${error}` });
         } finally {
-            setLoadingChat(false);
+            dispatch({ type: 'SET_LOADING_CHAT', payload: false });
         }
     }
 
+
     const handleSelectModel = useCallback((model) => {
-        setModel(model);
+        dispatch({ type: 'SET_MODEL', payload: model });
         updateModel(model);
     }, []);
 
-
     const closeTab = () => {
-        window.close()
-        // Send a message to the parent window
-       // window.parent.postMessage('close', '*'); // * allows any origin, but you should use your extension's URL in production
+        window.close();
     }
 
     useEffect(() => {
@@ -138,10 +121,9 @@ function App() {
 
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({behavior: "smooth"});
-    }, [messageHistory]);
+    }, [state.messageHistory]);
 
-
-    if (loading) {
+    if (state.loading) {
         return (
             <Pane
                 height="100vh"
@@ -158,7 +140,7 @@ function App() {
                     alignItems="center"
                     zIndex={2}
                 >
-                    <Heading size={800} fontFamily="'Roboto Mono', monospace" color="#F1F5FF">
+                    <Heading size={800} fontFamily="'Lato', sans-serif" color="#F1F5FF">
                         Codegod
                     </Heading>
                 </Pane>
@@ -170,18 +152,17 @@ function App() {
                     justifyContent="center"
                     flex="1"
                 >
-                    <Heading size={800} fontFamily="'Roboto Mono', monospace" color="#F1F5FF" className="loading-text">
-                       Analysing the code....
+                    <Heading size={800} fontFamily="'Lato', sans-serif" color="#F1F5FF" className="loading-text">
+                        Understanding the code....
                     </Heading>
-
                 </Pane>
             </Pane>
         );
     }
 
 
-    if (error) {
-        return <ErrorPanel url={url} error={error} onReload={load}/>;
+    if (state.error) {
+        return <ErrorPanel url={state.url} error={state.error} onReload={load}/>;
     }
 
     return (
@@ -201,16 +182,16 @@ function App() {
                 marginTop={8}
                 marginBottom={8}
             >
-                {messageHistory.map((chat) => <MemoizedChatBubble key={chat.id} chat={chat}/>)}
+                {state.messageHistory.map((chat) => <MemoizedChatBubble key={chat.id} chat={chat}/>)}
                 <div ref={messagesEndRef}/>
             </Pane>
 
             <ChatInput
-                value={question}
-                onChange={(e) => setQuestion(e.target.value)}
+                value={state.question}
+                onChange={(e) => dispatch({ type: 'SET_QUESTION', payload: e.target.value })}
                 onSend={submitQuestion}
-                isLoading={loadingChat}
-                blankQuestionError={blankQuestionError}
+                isLoading={state.loadingChat}
+                blankQuestionError={state.blankQuestionError}
             />
 
         </Pane>

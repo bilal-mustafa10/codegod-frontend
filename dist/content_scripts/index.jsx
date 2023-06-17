@@ -1,3 +1,4 @@
+/*
 // contentScript.js
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.cmd === 'show_popup') {
@@ -35,3 +36,4 @@ function showPopup() {
             }, 0);
         });
 }
+*/

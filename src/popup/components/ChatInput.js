@@ -1,7 +1,7 @@
 import React from 'react';
 import {Pane, TextInputField, Button} from 'evergreen-ui';
 
-const ChatInput = ({value, onChange, onSend, isLoading, blankQuestionError}) => (
+const ChatInput = ({value, onChange, onSend, isLoading, blankQuestionError, disabled}) => (
     <Pane
         padding={16}
         background="#0B0033"

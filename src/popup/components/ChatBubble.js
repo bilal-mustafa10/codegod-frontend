@@ -1,6 +1,7 @@
 import React from 'react';
 import {Pane, Text, Spinner, Strong} from 'evergreen-ui';
-import { motion } from 'framer-motion'; // Import framer-motion for animations
+import { motion } from 'framer-motion';
+import FormatResponse from "../utils/FormatResponse"; // Import framer-motion for animations
 
 const ChatBubble = ({chat}) => (
     <React.Fragment key={'message' + chat.id}>
@@ -18,13 +19,14 @@ const ChatBubble = ({chat}) => (
                     marginTop={16}
                     marginRight="auto"
                 >
-                    <Strong marginTop={0} size={500} fontFamily="'Roboto Mono', monospace" color="#F1F5FF">
+                    <Strong marginTop={0} size={500} fontFamily="'Lato', sans-serif" color="#F1F5FF">
                         Codegod
                     </Strong>
                     <br/>
-                    <Text marginTop={8} size={400} fontFamily="'Roboto Mono', monospace" color="#F1F5FF">
-                        {chat.answer === 'Loading...' ? <Spinner size={16} /> : chat.answer}
-                    </Text>
+                    {chat.answer === 'Loading...' ?
+                        <Spinner size={16} />
+                        : <FormatResponse content={chat.answer} />
+                    }
                 </Pane>
             </motion.div>
         ) : (
@@ -40,7 +42,7 @@ const ChatBubble = ({chat}) => (
                         justifyContent="space-between"
                         marginBottom={16}
                         padding={16}
-                        fontFamily="'Roboto Mono', monospace"
+                        fontFamily="'Lato', sans-serif"
                     >
                         <Pane
                             backgroundColor="#0070f3"
@@ -50,11 +52,11 @@ const ChatBubble = ({chat}) => (
                             marginTop={16}
                             marginLeft="auto"
                         >
-                            <Strong marginTop={0} size={500} fontFamily="'Roboto Mono', monospace" color="#F1F5FF">
+                            <Strong marginTop={0} size={500} fontFamily="'Lato', sans-serif" color="#F1F5FF">
                                 You
                             </Strong>
                             <br/>
-                            <Text marginTop={8} size={400} fontFamily="'Roboto Mono', monospace" color="#F1F5FF">
+                            <Text marginTop={8} size={400} fontFamily="'Lato', sans-serif" color="#F1F5FF">
                                 {chat.question}
                             </Text>
                         </Pane>
@@ -66,18 +68,16 @@ const ChatBubble = ({chat}) => (
                             marginTop={16}
                             marginRight="auto"
                         >
-                            <Strong marginTop={0} size={500} fontFamily="'Roboto Mono', monospace" color="#F1F5FF">
+                            <Strong marginTop={0} size={500} fontFamily="'Lato', sans-serif" color="#F1F5FF">
                                 Codegod
                             </Strong>
                             <br/>
                             {chat.answer === 'Loading...' ?
-                                <Text marginTop={8} size={400} fontFamily="'Roboto Mono', monospace" color="#F1F5FF" className="loading-text">
+                                <Text marginTop={8} size={400} fontFamily="'Lato', sans-serif" color="#F1F5FF" className="loading-text">
                                     {chat.answer}
                                 </Text>
                                 :
-                                <Text marginTop={8} size={400} fontFamily="'Roboto Mono', monospace" color="#F1F5FF">
-                                    {chat.answer}
-                                </Text>
+                                <FormatResponse content={chat.answer} />
                             }
                         </Pane>
                     </Pane>

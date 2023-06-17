@@ -1,0 +1,9 @@
+.format-response-container {
+    /* add your custom styles here */
+    font-size: 1rem;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: transparent;
+    font-family: 'Lato', sans-serif;
+}
