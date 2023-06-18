@@ -9,6 +9,7 @@ import ChatBubble from "./components/ChatBubble";
 import ChatInput from "./components/ChatInput";
 import './styles.css';
 import { initialState, reducer } from './stateReducer';
+import LoadingPanel from "./components/LoadingPanel";
 
 const isValidGithubRepoUrl = (url) => {
     const urlParts = url.split("/");
@@ -124,16 +125,7 @@ function App() {
     }, [state.messageHistory]);
 
     if (state.loading) {
-        return (
-            <Pane className="loading-pane">
-                <Pane className="header-pane">
-                    <Heading className="header-heading">CODEGOD</Heading>
-                </Pane>
-                <Pane className="loading-content-pane">
-                    <Heading className="loading-text">Understanding the code....</Heading>
-                </Pane>
-            </Pane>
-        );
+        return <LoadingPanel/>;
     }
 
 

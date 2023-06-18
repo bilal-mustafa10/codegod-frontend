@@ -4,10 +4,33 @@
     src: url('./fonts/Orbitron-Bold.ttf') format('truetype');
 }
 
+@font-face {
+    font-family: 'Orbitron';
+    src: url('./fonts/Orbitron-Regular.ttf') format('truetype');
+    font-weight: 400; /* Regular */
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Orbitron';
+    src: url('./fonts/Orbitron-SemiBold.ttf') format('truetype');
+    font-weight: 600; /* Semi-Bold */
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Orbitron';
+    src: url('./fonts/Orbitron-Bold.ttf') format('truetype');
+    font-weight: 700; /* Bold */
+    font-style: normal;
+}
+
+
 :root {
     --primary-color: #101010;
     --secondary-color: #F8F8F8;
     --background-color: #ececec;
+    --button-color: #008A4E;
     --font-family: 'Lato', sans-serif;
     --secondary-font-family: 'Orbitron', sans-serif;
     --font-color: #222831;
@@ -51,9 +74,25 @@
 }
 
 
+.error-panel {
+    height: 100vh;
+    padding: 20px;
+    background-color: #f7f7f7;
+    box-sizing: border-box;
+}
 
 .error-heading {
+    font-family: var(--secondary-font-family);
     color: var(--error-color);
+    font-size: 28px;
+}
+
+.error-heading-small{
+    font-family: var(--secondary-font-family);
+    color: var(--font-color);
+    margin: 20px;
+    font-size: 14px;
+    align-self: center;
 }
 
 /* ChatInput Styles */
@@ -142,7 +181,9 @@
     animation: loading 2s infinite;
     font-family: var(--secondary-font-family);
     color: var(--font-color);
-    font-size: 24px;
+    font-size: 24px; /* Increase the font size */
+    font-weight: 700; /* Make the heading bold */
+    margin-bottom: 20px; /* Add spacing between the heading and the tip */
 }
 
 /* Pane and motion styles */
@@ -264,4 +305,76 @@ body {
     font-size: 0.8em;
 }
 
+.animation-container {
+    width: 300px;
+    height: 300px;
+}
+
+.loading-animation-container {
+    width: 300px;
+    height: 200px;
+    margin-bottom: 30px; /* Add spacing between the animation and the text */
+}
+
+.button {
+    flex-grow: 1;
+    margin: 10px;
+    border-radius: var(--border-radius);
+    height: var(--button-height);
+    font-family: var(--secondary-font-family);
+    background-color: var(--background-color);
+    border-color: var(--font-color);
+    color: var(--font-color);
+}
+
+.github-button {
+    flex-grow: 1;
+    margin: 10px;
+    border-radius: var(--border-radius);
+    height: var(--button-height);
+    font-family: var(--secondary-font-family);
+    color: var(--background-color);
+    background-color: var(--font-color);
+    border-color: var(--font-color);
+}
+
+.animation-text-container {
+    /* Adjust padding, margin as needed. */
+    padding: 20px;
+    margin-top: -60px; /* Use negative margin to decrease gap between animation and text */
+}
+
+.loading-tip {
+    /* Adjust font size, color, margin as needed. */
+    font-family: var(--secondary-font-family);
+    font-size: 14px;
+    color: var(--font-color);
+    margin-top: 20px;
+    transition: all 1s ease-in-out; /* Simple transition for tip change. Adjust as needed. */
+    padding: 10px; /* Add padding to the tip container */
+    background-color: #f8f8f8; /* Add a light background color to the tip */
+    border-radius: var(--border-radius); /* Add border radius to the tip container */
+    text-align: justify; /* Align the text to justify */
+    font-weight: 400; /* Use Orbitron Regular for the tip */
+}
+
+.tip-title {
+    font-family: var(--secondary-font-family);
+    font-size: 18px;
+    color: var(--font-color);
+    font-weight: 700; /* Use Orbitron Bold for the title */
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.tip-content {
+    font-family: var(--secondary-font-family);
+    letter-spacing: 0.5px;
+    font-size: 16px;
+    color: var(--font-color);
+    font-weight: 400; /* Use Orbitron Regular for the content */
+    text-align: center;
+    margin-bottom: 10px;
+
+}
 
