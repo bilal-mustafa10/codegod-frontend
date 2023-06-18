@@ -1,15 +1,11 @@
 import React from 'react';
 import {Pane, TextInputField, Button} from 'evergreen-ui';
+import "../styles.css"; // Import the CSS file
 
 const ChatInput = ({value, onChange, onSend, isLoading, blankQuestionError, disabled}) => (
-    <Pane
-        padding={16}
-        background="#0B0033"
-        display="flex"
-        alignItems="center"
-        zIndex={2}
-    >
+    <Pane className="chat-input-pane">
         <TextInputField
+            className="chat-input-text"
             flex={1}
             marginRight={12}
             marginTop={0}
@@ -29,9 +25,9 @@ const ChatInput = ({value, onChange, onSend, isLoading, blankQuestionError, disa
             fontSize={18}
             spellCheck={true}
             isInvalid={blankQuestionError}
-            style={{height: '50px', borderRadius: '20px'}}
         />
         <Button
+            className="chat-input-button"
             marginRight={4}
             marginTop={8}
             marginBottom={0}
@@ -41,8 +37,6 @@ const ChatInput = ({value, onChange, onSend, isLoading, blankQuestionError, disa
             onClick={onSend}
             backgroundColor="#008A4E"
             fontSize={18}
-            borderRadius={20}
-            style={{height: '50px'}}
             disabled={isLoading}
         >
             Send

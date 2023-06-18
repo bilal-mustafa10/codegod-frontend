@@ -2,6 +2,10 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+
+const isDevelopment = process.env.NODE_ENV !== 'production';
+const isContentScript = (name) => name === 'contentScript';
 
 module.exports = {
     entry: {
@@ -22,6 +26,9 @@ module.exports = {
                     loader: 'babel-loader',
                     options: {
                         presets: ['@babel/preset-env', '@babel/preset-react'],
+                        plugins: [
+                            !isContentScript('contentScript') && isDevelopment && require.resolve('react-refresh/babel'),
+                        ].filter(Boolean),
                     },
                 },
             },
@@ -31,7 +38,6 @@ module.exports = {
             }
         ],
     },
-
     plugins: [
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
@@ -45,8 +51,10 @@ module.exports = {
                 { from: 'src/contentScript/index.jsx', to: 'content_scripts' }
             ],
         }),
-    ],
+        !isContentScript('contentScript') && isDevelopment && new ReactRefreshWebpackPlugin(),
+    ].filter(Boolean),
     resolve: {
         extensions: ['.js', '.jsx'],
     },
+    devtool: isDevelopment ? 'cheap-module-source-map' : false,
 };
