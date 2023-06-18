@@ -9,5 +9,3 @@ S
 -.idea/sonarlint/securityhotspotstore/index.pb,8/8/88a9255124c95bdc913197c120a8d560edc59c8e
 8
 .babelrc,b/c/bcac7464521b8c19a2372c739f6dc9e9ab7dfc80
-A
-webpack.config.js,d/5/d5595158cc48f9bf3e51b06f6e6805a8fd2d6262

@@ -7,7 +7,7 @@ import ErrorPanel from "./components/ErrorPanel";
 import Header from "./components/Header";
 import ChatBubble from "./components/ChatBubble";
 import ChatInput from "./components/ChatInput";
-import './App.css';
+import './styles.css';
 import { initialState, reducer } from './stateReducer';
 
 const isValidGithubRepoUrl = (url) => {
@@ -125,36 +125,12 @@ function App() {
 
     if (state.loading) {
         return (
-            <Pane
-                height="100vh"
-                display="flex"
-                flexDirection="column"
-                overflow="hidden"
-                backgroundColor="#00071C"
-            >
-                <Pane
-                    background="#0B0033" // Dark Blue
-                    padding={16}
-                    display="flex"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    zIndex={2}
-                >
-                    <Heading size={800} fontFamily="'Lato', sans-serif" color="#F1F5FF">
-                        Codegod
-                    </Heading>
+            <Pane className="loading-pane">
+                <Pane className="header-pane">
+                    <Heading className="header-heading">CODEGOD</Heading>
                 </Pane>
-                <Pane
-                    display="flex"
-                    padding={8}
-                    background="#00071C"
-                    alignItems="center"
-                    justifyContent="center"
-                    flex="1"
-                >
-                    <Heading size={800} fontFamily="'Lato', sans-serif" color="#F1F5FF" className="loading-text">
-                        Understanding the code....
-                    </Heading>
+                <Pane className="loading-content-pane">
+                    <Heading className="loading-text">Understanding the code....</Heading>
                 </Pane>
             </Pane>
         );
@@ -166,26 +142,12 @@ function App() {
     }
 
     return (
-        <Pane
-            height="100vh"
-            display="flex"
-            flexDirection="column"
-            overflow="hidden"
-            backgroundColor="#00071C"
-        >
+        <Pane className="main-pane">
             <Header onClose={closeTab} onSelectModel={handleSelectModel}/>
-            <Pane
-                background="#00071C"
-                flex={1}
-                padding={8}
-                overflowY="scroll"
-                marginTop={8}
-                marginBottom={8}
-            >
+            <Pane className="message-pane">
                 {state.messageHistory.map((chat) => <MemoizedChatBubble key={chat.id} chat={chat}/>)}
                 <div ref={messagesEndRef}/>
             </Pane>
-
             <ChatInput
                 value={state.question}
                 onChange={(e) => dispatch({ type: 'SET_QUESTION', payload: e.target.value })}
@@ -193,7 +155,6 @@ function App() {
                 isLoading={state.loadingChat}
                 blankQuestionError={state.blankQuestionError}
             />
-
         </Pane>
     );
 }

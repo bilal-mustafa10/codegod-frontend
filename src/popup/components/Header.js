@@ -1,5 +1,6 @@
 import React from 'react';
-import {CrossIcon, Heading, IconButton, Pane, Tooltip, Select} from 'evergreen-ui';
+import { Avatar, CrossIcon, Heading, IconButton, Pane, Tooltip, Select, minorScale } from 'evergreen-ui';
+import "../styles.css";
 
 const Header = ({onClose, onSelectModel}) => {
     const [selectedModel, setSelectedModel] = React.useState('GPT 3.5');
@@ -10,32 +11,24 @@ const Header = ({onClose, onSelectModel}) => {
     };
 
     return (
-        <Pane
-            background="#0B0033" // Dark Blue
-            padding={16}
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            zIndex={2}
-        >
+        <Pane className="header-pane" elevation={1} display="flex" alignItems="center" justifyContent="space-between" padding={minorScale(1)}>
             <Pane display="flex" alignItems="center">
-                {/*<img src="../../../assets/img/logo.png" alt="Codegod Logo" width="50" height="50"/>*/}
-                <Heading size={800} fontFamily="'Lato', sans-serif" color="#F1F5FF">
-                    Codegod
+                <Heading size={600} className="header-heading">
+                    CODEGOD
                 </Heading>
             </Pane>
-            <Pane display="flex" alignItems="center">
-                <Heading size={600} fontFamily="'Lato', sans-serif" color="#F1F5FF" marginRight={16}>
-                    Model:
+            <Pane display="flex" alignItems="center" className="header-selection">
+                <Heading size={400} className="select-model" marginRight={minorScale(1)}>
+                    Model
                 </Heading>
-                <Select value={selectedModel} onChange={handleModelChange}>
+                <Select value={selectedModel} onChange={handleModelChange} marginRight={minorScale(2)} height={28}>
                     <option value="gpt-3.5">GPT 3.5</option>
                     <option value="dolly">Dolly</option>
                 </Select>
             </Pane>
             <Pane>
                 <Tooltip content="Close">
-                    <IconButton icon={CrossIcon} intent="danger" color="#06002C" onClick={onClose}/>
+                    <IconButton icon={CrossIcon} intent="danger" onClick={onClose} height={24}/>
                 </Tooltip>
             </Pane>
         </Pane>

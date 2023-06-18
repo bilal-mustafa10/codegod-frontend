@@ -1,33 +1,23 @@
 import React from 'react';
-import {Pane, Heading, Alert, Button, Dialog, Text, majorScale} from 'evergreen-ui';
+import {Pane, Heading, Alert, Button, Dialog, Text} from 'evergreen-ui';
+import "../styles.css"; // Import the CSS file
 
 const ErrorPanel = ({url, error, onReload}) => {
     const [isDialogShown, setIsDialogShown] = React.useState(true);
 
     return (
-        <Pane
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-            height={600}
-            background="#00071C"
-            padding={majorScale(2)}
-        >
-            <Heading size={700} color="#F1F5FF" marginBottom={majorScale(2)}>Oops, something went wrong!</Heading>
+        <Pane className="error-panel">
+            <Heading size={700} className="error-heading">Oops, something went wrong!</Heading>
             <Alert
                 intent="danger"
                 title="Error Message:"
-                marginBottom={majorScale(2)}
             >
                 {error}
             </Alert>
             <Button
                 appearance="primary"
+                className="button"
                 onClick={onReload}
-                marginTop={16}
-                backgroundColor="#E40000"
-                marginBottom={majorScale(2)}
             >
                 Try Again
             </Button>

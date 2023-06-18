@@ -1,7 +1,8 @@
 import React from 'react';
 import {Pane, Text, Spinner, Strong} from 'evergreen-ui';
 import { motion } from 'framer-motion';
-import FormatResponse from "../utils/FormatResponse"; // Import framer-motion for animations
+import FormatResponse from "../utils/FormatResponse";
+import "../styles.css";
 
 const ChatBubble = ({chat}) => (
     <React.Fragment key={'message' + chat.id}>
@@ -10,16 +11,10 @@ const ChatBubble = ({chat}) => (
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
+                className="fade-enter"
             >
-                <Pane
-                    backgroundColor="#350063"
-                    padding={16}
-                    borderRadius={16}
-                    maxWidth="70%"
-                    marginTop={16}
-                    marginRight="auto"
-                >
-                    <Strong marginTop={0} size={500} fontFamily="'Lato', sans-serif" color="#F1F5FF">
+                <Pane className="bot-pane chat-bubble-pane">
+                    <Strong className="chat-bubble-text">
                         Codegod
                     </Strong>
                     <br/>
@@ -35,51 +30,29 @@ const ChatBubble = ({chat}) => (
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
+                    className="fade-enter"
                 >
-                    <Pane
-                        display="flex"
-                        flexDirection="column"
-                        justifyContent="space-between"
-                        marginBottom={16}
-                        padding={16}
-                        fontFamily="'Lato', sans-serif"
-                    >
-                        <Pane
-                            backgroundColor="#0070f3"
-                            padding={16}
-                            borderRadius={16}
-                            maxWidth="70%"
-                            marginTop={16}
-                            marginLeft="auto"
-                        >
-                            <Strong marginTop={0} size={500} fontFamily="'Lato', sans-serif" color="#F1F5FF">
-                                You
-                            </Strong>
-                            <br/>
-                            <Text marginTop={8} size={400} fontFamily="'Lato', sans-serif" color="#F1F5FF">
-                                {chat.question}
+                    <Pane className="user-pane chat-bubble-pane">
+                        <Strong className="chat-bubble-text">
+                            You
+                        </Strong>
+                        <br/>
+                        <Text className="chat-bubble-text">
+                            {chat.question}
+                        </Text>
+                    </Pane>
+                    <Pane className="bot-pane chat-bubble-pane">
+                        <Strong className="chat-bubble-text">
+                            Codegod
+                        </Strong>
+                        <br/>
+                        {chat.answer === 'Loading...' ?
+                            <Text className="loading-text">
+                                {chat.answer}
                             </Text>
-                        </Pane>
-                        <Pane
-                            backgroundColor="#350063"
-                            padding={16}
-                            borderRadius={16}
-                            maxWidth="70%"
-                            marginTop={16}
-                            marginRight="auto"
-                        >
-                            <Strong marginTop={0} size={500} fontFamily="'Lato', sans-serif" color="#F1F5FF">
-                                Codegod
-                            </Strong>
-                            <br/>
-                            {chat.answer === 'Loading...' ?
-                                <Text marginTop={8} size={400} fontFamily="'Lato', sans-serif" color="#F1F5FF" className="loading-text">
-                                    {chat.answer}
-                                </Text>
-                                :
-                                <FormatResponse content={chat.answer} />
-                            }
-                        </Pane>
+                            :
+                            <FormatResponse content={chat.answer} />
+                        }
                     </Pane>
                 </motion.div>
             </>

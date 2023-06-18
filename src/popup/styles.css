@@ -1,0 +1,267 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap'); /* styles.css */
+@font-face {
+    font-family: 'Orbitron';
+    src: url('./fonts/Orbitron-Bold.ttf') format('truetype');
+}
+
+:root {
+    --primary-color: #101010;
+    --secondary-color: #F8F8F8;
+    --background-color: #ececec;
+    --font-family: 'Lato', sans-serif;
+    --secondary-font-family: 'Orbitron', sans-serif;
+    --font-color: #222831;
+    --border-radius: 12px;
+    --button-height: 50px;
+    --max-width: 65%;
+    --input-padding: 10px;
+    --error-color: #f05454;
+    --body-height: 600px;
+    --body-width: 800px;
+}
+
+
+/* Header Styles */
+.header-heading {
+    font-family: var(--secondary-font-family);
+    color: var(--background-color);
+    letter-spacing: 2px;
+    font-size: 24px;
+}
+
+.select-model {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--background-color);
+    letter-spacing: 2px;
+    font-size: 18px;
+}
+
+.header-selection {
+    display: flex; /* Keep the model selection label and dropdown on the same line */
+    align-items: center; /* Center the model selection label and dropdown vertically */
+    color: var(--background-color); /* Make sure the model selection label matches the header text color */
+}
+
+.header-selection select {
+    margin-left: var(--input-padding); /* Standardize the space between the model selection label and dropdown */
+    color: var(--font-color); /* Make the dropdown text the standard font color */
+    border-radius: var(--border-radius); /* Match the dropdown border rounding to the rest of the design */
+    height: 24px; /* Smaller height for the dropdown to match the compact header size */
+    font-size: 14px; /* Smaller font size for the dropdown to match the compact header size */
+}
+
+
+
+.error-heading {
+    color: var(--error-color);
+}
+
+/* ChatInput Styles */
+.chat-input-pane {
+    padding: var(--input-padding);
+    background: var(--primary-color);
+    display: flex;
+    align-items: center;
+    z-index: 2;
+}
+
+.chat-input-text {
+    height: var(--button-height);
+    border-radius: var(--border-radius);
+}
+
+.chat-input-button {
+    height: var(--button-height);
+    border-radius: var(--border-radius);
+}
+
+/* ChatBubble Styles */
+.chat-bubble-pane, .bot-pane, .user-pane {
+    padding: 10px;
+    border-radius: var(--border-radius);
+    max-width: var(--max-width);
+    margin-top: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    overflow-x: auto;
+    word-wrap: break-word;
+}
+
+.user-pane {
+    background-color: var(--primary-color); /* Black background for user chat */
+    color: var(--background-color); /* White font for user chat */
+    margin-left: auto;
+}
+
+.bot-pane {
+    background-color: var(--secondary-color); /* Light white background for bot chat */
+    color: var(--font-color); /* Black font for bot chat */
+    margin-right: auto;
+}
+
+.chat-bubble-text {
+    font-family: var(--secondary-font-family);
+    color: var(--font-color);
+    line-height: 1.5;
+}
+
+.user-pane .chat-bubble-text {
+    color: var(--background-color);
+    line-height: 1.5;
+    background-color: var(--primary-color);
+    font-family: var(--font-family);;
+}
+
+
+/* Fade transitions */
+.fade-enter {
+    opacity: 0;
+}
+
+.fade-enter-active {
+    opacity: 1;
+    transition: opacity 300ms;
+}
+
+.fade-exit {
+    opacity: 1;
+}
+
+.fade-exit-active {
+    opacity: 0;
+    transition: opacity 300ms;
+}
+
+/* Loading animations */
+@keyframes loading {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+.loading-text {
+    animation: loading 2s infinite;
+    font-family: var(--secondary-font-family);
+    color: var(--font-color);
+    font-size: 24px;
+}
+
+/* Pane and motion styles */
+.Pane {
+    padding: 10px;
+}
+
+.motion-div {
+    margin-top: 10px;
+}
+
+/* Message text and title styles */
+.Text, .Strong {
+    line-height: 1.4;
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: var(--font-color);
+}
+
+.Strong {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--font-color);
+}
+
+/* Duplicate loading styles from App.css - You may want to remove this to avoid redundancy */
+@keyframes loading {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+body {
+    height: var(--body-height);
+    width: var(--body-width);
+    margin: 0;
+    padding: 0;
+    border-radius: var(--border-radius);
+}
+
+/* styles.css */
+
+/* Generic container styles */
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+/* Loading styles */
+.loading-pane {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: var(--background-color);
+}
+
+.header-pane {
+    background: var(--primary-color);
+    padding: var(--input-padding);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 3;
+}
+
+
+.loading-content-pane {
+    display: flex;
+    padding: 8px;
+    background: var(--background-color);
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+}
+
+
+/* Main app view styles */
+.main-pane {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: var(--background-color);
+}
+
+.message-pane {
+    background: var(--background-color);
+    flex: 1;
+    padding: 8px;
+    overflow-y: scroll;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.format-response-container {
+    font-family: var(--font-family);
+    color: var(--font-color);
+    line-height: 1.5;
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.react-syntax-highlighter-line-highlight {
+    background: #f0f0f0 !important; /* Adjust the color to your liking */
+}
+
+.syntax-highlighter {
+    overflow-x: auto;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+    max-width: 100%;
+    font-size: 0.8em;
+}
+
+
