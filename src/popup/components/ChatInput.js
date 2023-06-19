@@ -35,8 +35,6 @@ const ChatInput = ({value, onChange, onSend, isLoading, blankQuestionError, disa
             intent="success"
             appearance="primary"
             onClick={onSend}
-            backgroundColor="#008A4E"
-            fontSize={18}
             disabled={isLoading}
         >
             Send

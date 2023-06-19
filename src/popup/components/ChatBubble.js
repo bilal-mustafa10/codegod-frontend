@@ -1,8 +1,18 @@
 import React from 'react';
-import {Pane, Text, Spinner, Strong} from 'evergreen-ui';
+import {Pane, Text, Spinner, Strong, IconButton, Tooltip} from 'evergreen-ui';
 import { motion } from 'framer-motion';
 import FormatResponse from "../utils/FormatResponse";
+import { FiCopy } from 'react-icons/fi';
 import "../styles.css";
+
+const copyToClipboard = (text, id) => {
+    navigator.clipboard.writeText(text);
+    const copyBtn = document.getElementById(id);
+    copyBtn.classList.add("copied");
+    setTimeout(() => {
+        copyBtn.classList.remove("copied");
+    }, 3500);
+};
 
 const ChatBubble = ({chat}) => (
     <React.Fragment key={'message' + chat.id}>
@@ -14,9 +24,19 @@ const ChatBubble = ({chat}) => (
                 className="fade-enter"
             >
                 <Pane className="bot-pane chat-bubble-pane">
-                    <Strong className="chat-bubble-text">
-                        Codegod
-                    </Strong>
+                    <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                        <Strong className="chat-bubble-text">
+                            Codegod
+                        </Strong>
+                        <Tooltip content="Copy to clipboard">
+                            <IconButton
+                                id={`copy-btn-${chat.id}`}
+                                icon={FiCopy}
+                                appearance="minimal"
+                                onClick={() => copyToClipboard(chat.answer, `copy-btn-${chat.id}`)}
+                            />
+                        </Tooltip>
+                    </div>
                     <br/>
                     {chat.answer === 'Loading...' ?
                         <Spinner size={16} />
@@ -33,22 +53,42 @@ const ChatBubble = ({chat}) => (
                     className="fade-enter"
                 >
                     <Pane className="user-pane chat-bubble-pane">
-                        <Strong className="chat-bubble-text">
-                            You
-                        </Strong>
+                        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                            <Strong className="chat-bubble-text">
+                                You
+                            </Strong>
+                            <Tooltip content="Copy to clipboard">
+                                <IconButton
+                                    id={`copy-btn-${chat.id}`}
+                                    icon={FiCopy}
+                                    appearance="minimal"
+                                    onClick={() => copyToClipboard(chat.question, `copy-btn-${chat.id}`)}
+                                />
+                            </Tooltip>
+                        </div>
                         <br/>
                         <Text className="chat-bubble-text">
                             {chat.question}
                         </Text>
                     </Pane>
                     <Pane className="bot-pane chat-bubble-pane">
-                        <Strong className="chat-bubble-text">
-                            Codegod
-                        </Strong>
+                        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                            <Strong className="chat-bubble-text">
+                                Codegod
+                            </Strong>
+                            <Tooltip content="Copy to clipboard">
+                                <IconButton
+                                    id={`copy-btn-${chat.id}`}
+                                    icon={FiCopy}
+                                    appearance="minimal"
+                                    onClick={() => copyToClipboard(chat.answer, `copy-btn-${chat.id}`)}
+                                />
+                            </Tooltip>
+                        </div>
                         <br/>
                         {chat.answer === 'Loading...' ?
                             <Text className="loading-text">
-                                {chat.answer}
+                                {chat.answer}<span className="loading-ellipsis">...</span>
                             </Text>
                             :
                             <FormatResponse content={chat.answer} />

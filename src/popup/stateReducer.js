@@ -10,6 +10,7 @@ export const initialState = {
     loadingChat: false,
     model: 'gpt-3.5',
     blankQuestionError: false,
+    questionId: null  // Add this
 };
 
 export const reducer = (state, action) => {
@@ -40,6 +41,19 @@ export const reducer = (state, action) => {
                         ? {...chat, answer: action.payload}
                         : chat
                 )
+            };
+        case 'SET_CHAT_ERROR':
+            const lastMessageIndex = state.messageHistory.length - 1;
+            const lastMessage = state.messageHistory[lastMessageIndex];
+            const updatedMessage = { ...lastMessage, answer: action.payload };
+            const updatedMessageHistory = [...state.messageHistory];
+            updatedMessageHistory[lastMessageIndex] = updatedMessage;
+
+            return {
+                ...state,
+                chatError: action.payload,
+                loadingChat: false,
+                questionId: action.questionId  // Add this
             };
         default:
             throw new Error(`Unknown action: ${action.type}`);

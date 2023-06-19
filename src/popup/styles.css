@@ -107,11 +107,18 @@
 .chat-input-text {
     height: var(--button-height);
     border-radius: var(--border-radius);
+    font-size: 14px;
+    font-family: var(--font-family);
+    font-weight: 600;
 }
 
 .chat-input-button {
     height: var(--button-height);
     border-radius: var(--border-radius);
+    font-size: 18px;
+    font-family: var(--secondary-font-family);
+    font-weight: 700;
+    background-color: var(--button-color);
 }
 
 /* ChatBubble Styles */
@@ -329,13 +336,15 @@ body {
 
 .github-button {
     flex-grow: 1;
-    margin: 10px;
+    margin: 20px;
     border-radius: var(--border-radius);
     height: var(--button-height);
     font-family: var(--secondary-font-family);
     color: var(--background-color);
     background-color: var(--font-color);
     border-color: var(--font-color);
+    font-weight: 800;
+    font-size: 18px;
 }
 
 .animation-text-container {
@@ -376,5 +385,27 @@ body {
     text-align: center;
     margin-bottom: 10px;
 
+}
+
+.loading-ellipsis {
+    animation: loading-ellipsis 2s infinite;
+}
+
+.copied {
+    animation: copied 2s;
+}
+
+@keyframes copied {
+    0% { color: initial; }
+    50% { color: green; }
+    100% { color: initial; }
+}
+
+@keyframes loading-ellipsis {
+    0% { content: ""; }
+    25% { content: "."; }
+    50% { content: ".."; }
+    75% { content: "..."; }
+    100% { content: ""; }
 }
 
